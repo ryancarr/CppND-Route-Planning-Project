@@ -13,6 +13,12 @@ RoutePlanner::RoutePlanner(RouteModel &model, float start_x, float start_y, floa
     end_node = &m_Model.FindClosestNode(end_x, end_y);
 }
 
+void RoutePlanner::AStarSearch()
+{
+    end_node->parent = start_node;
+    m_Model.path = ConstructFinalPath(end_node);
+}
+
 std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node *current_node)
 {
     std::vector<RouteModel::Node> path_found;
