@@ -46,8 +46,9 @@ RouteModel::Node &RouteModel::FindClosestNode(float x, float y)
 	float distance;
 	int closest_index;
 
-	for(const Model::Road &road : Roads())
+	for(auto &road : Roads())
 	{
+		// Skip over any Footpaths, we only want roads
 		if(road.type == Model::Road::Footway) continue;
 		for(auto node_index : Ways()[road.way].nodes)
 		{
@@ -86,6 +87,6 @@ void RouteModel::Node::FindNeighbors()
 	{
 		RouteModel::Node * new_neighbor = this->FindNeighbor(parent_model->Ways()[road->way].nodes);
 
-		if(new_neighbor) this->neighbors.push_back(new_neighbor);
+		if(new_neighbor) this->neighbors.emplace_back(new_neighbor);
 	}
 }
