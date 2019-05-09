@@ -20,11 +20,11 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
 
     while(current_node->parent != nullptr)
     {
-        path_found.emplace_back(current_node);
+        path_found.emplace_back(*current_node);
         distance += current_node->distance(*(current_node->parent));
         current_node = current_node->parent;
     }
-    path_found.emplace_back(current_node);
+    path_found.emplace_back(*current_node);
     distance *= m_Model.MetricScale();
 
     return path_found;
