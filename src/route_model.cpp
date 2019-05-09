@@ -36,6 +36,33 @@ void RouteModel::CreateNodeToRoadHashmap()
 	}
 }
 
+RouteModel::Node &RouteModel::FindClosestNode(float x, float y)
+{
+	Node temp_node;
+	temp_node.x = x;
+	temp_node.y = y;
+
+	float min_distance = std::numeric_limits<float>::max();
+	float distance;
+	int closest_index;
+
+	for(const Model::Road &road : Roads())
+	{
+		if(road.type == Model::Road::Footway) continue;
+		for(auto node_index : Ways()[road.way].nodes)
+		{
+			distance = temp_node.distance(SNodes()[node_index]);
+			if(distance < min_distance)
+			{
+				closest_index = node_index;
+				min_distance = distance;
+			}
+		}
+	}
+
+	return SNodes()[closest_index];
+}
+
 RouteModel::Node * RouteModel::Node::FindNeighbor(std::vector<int> node_indices)
 {
 	Node *closest_node = nullptr;

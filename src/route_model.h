@@ -18,7 +18,7 @@ class RouteModel : public Model {
         std::vector<Node *> neighbors;
 
         void FindNeighbors();
-        float distance(Node dest) const;
+        float distance(Node) const;
         
         Node(){}
         Node(int idx, RouteModel * search_model, Model::Node node) : Model::Node(node), parent_model(search_model), index(idx) {}
@@ -27,7 +27,7 @@ class RouteModel : public Model {
         // Add private Node variables and methods here.
         int index;
         RouteModel * parent_model = nullptr;
-        RouteModel::Node * FindNeighbor(std::vector<int> node_indices);
+        RouteModel::Node * FindNeighbor(std::vector<int>);
     };
     
     // Add public RouteModel variables and methods here.
@@ -35,6 +35,7 @@ class RouteModel : public Model {
     auto &SNodes() { return m_Nodes; };
     std::vector<Node> path; // This variable will eventually store the path that is found by the A* search.
     auto &GetNodeToRoadMap() { return node_to_road; } // Used for testing functionality of node_to_road
+    Node &FindClosestNode(float, float);
 
   private:
     std::vector<Node> m_Nodes;
