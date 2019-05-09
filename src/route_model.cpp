@@ -14,6 +14,12 @@ RouteModel::RouteModel(const std::vector<std::byte> &xml) : Model(xml)
 	CreateNodeToRoadHashmap();
 }
 
+float RouteModel::Node::distance(Node dest) const
+{
+	// Find Euclidean distance between two Nodes
+	return std::sqrt( std::pow(this->x - dest.x, 2) + std::pow(this->y - dest.y, 2) );
+}
+
 void RouteModel::CreateNodeToRoadHashmap()
 {
 	for(auto &road : Roads()) // Needs to reference the road
