@@ -17,7 +17,8 @@ class RouteModel : public Model {
         Node *parent = nullptr;
         std::vector<Node *> neighbors;
 
-        float distance(Node dest) const { return std::sqrt( std::pow(this->x - dest.x, 2)+ std::pow(this->y - dest.y, 2) ); }
+        void FindNeighbors();
+        float distance(Node dest) const { return std::sqrt( std::pow(this->x - dest.x, 2)+ std::pow(this->y - dest.y, 2) ); }        
         
         Node(){}
         Node(int idx, RouteModel * search_model, Model::Node node) : Model::Node(node), parent_model(search_model), index(idx) {}
@@ -26,6 +27,7 @@ class RouteModel : public Model {
         // Add private Node variables and methods here.
         int index;
         RouteModel * parent_model = nullptr;
+        RouteModel::Node * FindNeighbor(std::vector<int> node_indices);
     };
     
     // Add public RouteModel variables and methods here.
