@@ -24,22 +24,24 @@ class RouteModel : public Model {
         Node(int idx, RouteModel * search_model, Model::Node node) : Model::Node(node), parent_model(search_model), index(idx) {}
       
       private:
-        // Add private Node variables and methods here.
         int index;
         RouteModel * parent_model = nullptr;
+
         RouteModel::Node * FindNeighbor(std::vector<int>);
     };
     
-    // Add public RouteModel variables and methods here.
-    RouteModel(const std::vector<std::byte> &xml);
-    auto &SNodes() { return m_Nodes; };
     std::vector<Node> path; // This variable will eventually store the path that is found by the A* search.
+
+    auto &SNodes() { return m_Nodes; };    
     auto &GetNodeToRoadMap() { return node_to_road; } // Used for testing functionality of node_to_road
+    
+    RouteModel(const std::vector<std::byte> &xml);
     Node &FindClosestNode(float, float);
 
   private:
     std::vector<Node> m_Nodes;
     std::unordered_map<int, std::vector<const Model::Road *> > node_to_road;
+    
     void CreateNodeToRoadHashmap();
 
 };
