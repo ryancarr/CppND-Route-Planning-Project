@@ -1,31 +1,6 @@
 #include "route_model.h"
 #include <iostream>
 
-RouteModel::RouteModel(const std::vector<std::byte> &xml) : Model(xml) 
-{
-	int counter = 0;
-
-	for(Model::Node node : this->Nodes())
-	{
-		m_Nodes.emplace_back(RouteModel::Node(counter, this, node));
-		counter++;
-	}
-
-	CreateNodeToRoadHashmap();
-}
-
-/**
- * Find Euclidean distance between two Nodes
- * 
- * @param dest The destination node
- * 
- * @return Float representing the distance between the x,y coordinates of both Nodes
- */
-float RouteModel::Node::distance(Node dest) const
-{
-	return std::sqrt( std::pow(this->x - dest.x, 2) + std::pow(this->y - dest.y, 2) );
-}
-
 /**
  * Create a HashMap to associate nodes with their respective road
  */
@@ -45,6 +20,18 @@ void RouteModel::CreateNodeToRoadHashmap()
 			node_to_road[node_idx].emplace_back(&road);
 		}
 	}
+}
+
+/**
+ * Find Euclidean distance between two Nodes
+ * 
+ * @param dest The destination node
+ * 
+ * @return Float representing the distance between the x,y coordinates of both Nodes
+ */
+float RouteModel::Node::distance(Node dest) const
+{
+	return std::sqrt( std::pow(this->x - dest.x, 2) + std::pow(this->y - dest.y, 2) );
 }
 
 /**
@@ -121,4 +108,22 @@ void RouteModel::Node::FindNeighbors()
 
 		if(new_neighbor) this->neighbors.emplace_back(new_neighbor);
 	}
+}
+
+/**
+ * Constructor for RouteModel
+ * 
+ * @param xml The xml file containing the map data
+ */
+RouteModel::RouteModel(const std::vector<std::byte> &xml) : Model(xml) 
+{
+	int counter = 0;
+
+	for(Model::Node node : this->Nodes())
+	{
+		m_Nodes.emplace_back(RouteModel::Node(counter, this, node));
+		counter++;
+	}
+
+	CreateNodeToRoadHashmap();
 }

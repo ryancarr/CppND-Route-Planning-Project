@@ -9,22 +9,21 @@
 
 class RoutePlanner {
   public:
-    RoutePlanner(RouteModel &, float, float, float, float);
+    void AStarSearch();    
     float GetDistance() const { return distance; }
-    void AStarSearch();
+    RoutePlanner(RouteModel &, float, float, float, float);
+    
 
   private:
-    RouteModel &m_Model;
-    RouteModel::Node *start_node, *end_node;
-    std::vector<RouteModel::Node *> open_list;
     float distance;
+    RouteModel &m_Model;
+    std::vector<RouteModel::Node *> open_list;
+    RouteModel::Node *start_node, *end_node;
 
-    std::vector<RouteModel::Node> ConstructFinalPath(RouteModel::Node *);
+    void AddNeighbors(RouteModel::Node *);
     float CalculateHValue(const RouteModel::Node *);
     static bool Compare(const RouteModel::Node *, const RouteModel::Node *);
+    std::vector<RouteModel::Node> ConstructFinalPath(RouteModel::Node *);    
     RouteModel::Node *NextNode();
-    void AddNeighbors(RouteModel::Node *);
-    
 };
-
 #endif
