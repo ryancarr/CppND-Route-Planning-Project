@@ -20,11 +20,11 @@ class RouteModel : public Model {
         float distance(Node) const;
         void FindNeighbors();
         Node(){}
-        Node(int idx, RouteModel * search_model, Model::Node node) : Model::Node(node), parent_model(search_model), index(idx) {}
+        Node(int idx, RouteModel *search_model, Model::Node node) : Model::Node(node), parent_model(search_model), index(idx) {}
       
       private:
         int index;
-        RouteModel * parent_model = nullptr;
+        RouteModel *parent_model = nullptr;
 
         RouteModel::Node * FindNeighbor(std::vector<int>);
     };

@@ -49,7 +49,7 @@ RouteModel::Node &RouteModel::FindClosestNode(float x, float y)
 	temp_node.y = y;
 
 	float min_distance = std::numeric_limits<float>::max();
-	float distance;
+	float dist;
 	int closest_index;
 
 	for(auto &road : Roads())
@@ -60,12 +60,12 @@ RouteModel::Node &RouteModel::FindClosestNode(float x, float y)
 		// Loop through the index of each node along each road
 		for(auto node_index : Ways()[road.way].nodes)
 		{
-			distance = temp_node.distance(SNodes()[node_index]);
+			dist = temp_node.distance(SNodes()[node_index]);
 
-			if(distance < min_distance)
+			if(dist < min_distance)
 			{
 				closest_index = node_index;
-				min_distance = distance;
+				min_distance = dist;
 			}
 		}
 	}

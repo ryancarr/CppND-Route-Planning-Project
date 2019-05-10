@@ -42,7 +42,7 @@ void RoutePlanner::AStarSearch()
         // Check if current_node is the end_node
         if(current_node->distance(*end_node) == 0)
         {
-            m_Model.path = ConstructFinalPath(current_node);
+            m_Model.path = ConstructFinalPath(end_node);
             return;            
         }
         else
@@ -143,10 +143,10 @@ RouteModel::Node *RoutePlanner::NextNode()
 RoutePlanner::RoutePlanner(RouteModel &model, float start_x, float start_y, float end_x, float end_y): m_Model(model)
 {
     m_Model = model;
-    start_x *= 0.01;
-    start_y *= 0.01;
-    end_x   *= 0.01;
-    end_y   *= 0.01;
+    start_x /= 100;
+    start_y /= 100;
+    end_x   /= 100;
+    end_y   /= 100;
 
     start_node = &m_Model.FindClosestNode(start_x, start_y);
     end_node = &m_Model.FindClosestNode(end_x, end_y);
