@@ -17,7 +17,7 @@ void RouteModel::CreateNodeToRoadHashmap()
 			if(node_to_road.find(node_idx) == node_to_road.end()) // node_idx doesn't exist
 				node_to_road[node_idx] = std::vector<const Model::Road *> {};
 			
-			node_to_road[node_idx].emplace_back(&road);
+			node_to_road[node_idx].push_back(&road);
 		}
 	}
 }
@@ -106,7 +106,7 @@ void RouteModel::Node::FindNeighbors()
 	{
 		RouteModel::Node * new_neighbor = this->FindNeighbor(parent_model->Ways()[road->way].nodes);
 
-		if(new_neighbor) this->neighbors.emplace_back(new_neighbor);
+		if(new_neighbor) this->neighbors.push_back(new_neighbor);
 	}
 }
 
@@ -121,7 +121,7 @@ RouteModel::RouteModel(const std::vector<std::byte> &xml) : Model(xml)
 
 	for(Model::Node node : this->Nodes())
 	{
-		m_Nodes.emplace_back(RouteModel::Node(counter, this, node));
+		m_Nodes.push_back(RouteModel::Node(counter, this, node));
 		counter++;
 	}
 

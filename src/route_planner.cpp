@@ -90,14 +90,14 @@ bool RoutePlanner::Compare(const RouteModel::Node *first, const RouteModel::Node
 std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node *current_node)
 {
     std::vector<RouteModel::Node> path_found;
-    distance = 0.0f;
+    total_distance = 0.0f;
 
     // When current_node's parent is nullptr we know we've reached the start_node
     while(current_node->parent != nullptr)
     {
         path_found.emplace_back(*current_node);
         // Finds cumulative sum of distance between all nodes
-        distance += current_node->distance(*(current_node->parent));
+        total_distance += current_node->distance(*(current_node->parent));
 
         // Move back one node in the route
         current_node = current_node->parent;
@@ -107,7 +107,7 @@ std::vector<RouteModel::Node> RoutePlanner::ConstructFinalPath(RouteModel::Node 
     path_found.emplace_back(*current_node);
 
     // Convert distance to meters based on scale of map
-    distance *= m_Model.MetricScale();
+    total_distance *= m_Model.MetricScale();
 
     return path_found;
 }

@@ -10,12 +10,12 @@
 class RoutePlanner {
   public:
     void AStarSearch();    
-    float GetDistance() const { return distance; }
+    float GetDistance() const { return total_distance; }
     RoutePlanner(RouteModel &, float, float, float, float);
     
 
   private:
-    float distance;
+    float total_distance;
     RouteModel &m_Model;
     std::vector<RouteModel::Node *> open_list;
     RouteModel::Node *start_node, *end_node;
